@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+function websqlOK() {
+	return "openDatabase" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+
+	//No support? Go in the corner and pout.
+	if(!websqlOK()) return;
+
+	db = window.openDatabase("db1", "1", "Database 1", 5*1024*1024);
+
+    db.transaction(function(tx) {
+		tx.executeSql("create table if not exists notes(id INTEGER PRIMARY "+
+		"KEY AUTOINCREMENT, title TEXT, body TEXT, updated DATE)");
+    },dbError,function(tx) { 
+		ready();
+    });
+	
+});
+
+function dbError(e) {
+	console.log("Error", e);
+}
+
+function ready() {
+	console.log("Ready to do stuff!");	
+}
+</script>
+</body>
+</html>

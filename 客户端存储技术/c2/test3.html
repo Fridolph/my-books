@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cookie Test Three</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="cookies.js"></script>
+</head>
+<body>
+
+	<div id="resultDiv"></div>
+
+	<script>		
+	$(document).ready(function() {
+
+		var $resultDiv = $("#resultDiv");
+		
+		//Is this a brand new user?
+		var newUser = true;
+		//How many days since last visit
+		var daysSinceLastVisit;
+		
+		//Check to see if we have the cookie...
+		if(docCookies.hasItem("lastVisit")) {
+			newUser = false;
+			//do some math to find out how long it has been
+			var lastVisit = docCookies.getItem("lastVisit");
+			var now = new Date();
+			var lastVisitDate = new Date(lastVisit);
+			//credit: http://stackoverflow.com/a/3224854/52160
+			var timeDiff = Math.abs(now.getTime() - lastVisitDate.getTime());
+			var daysSinceLastVisit = Math.ceil(timeDiff / (1000 * 3600 * 24));
+		}
+		
+		//Set to now
+		docCookies.setItem("lastVisit", new Date(), Infinity);
+		
+		if(newUser) {
+			$resultDiv.text("Welcome to the site!");
+		} else if(daysSinceLastVisit > 20) {
+			$resultDiv.text("Welcome back to the site!");                
+		} else {
+			$resultDiv.text("Welcome good user!");
+		}
+		
+	});
+	</script>
+
+</body>
+</html>

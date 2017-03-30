@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+function idbOK() {
+	return "indexedDB" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+	
+	//No support? Go in the corner and pout.
+	if(!idbOK()) return;
+
+	var openRequest = indexedDB.open("ora_idb2",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+		console.log("running onupgradeneeded");
+		if(!thisDB.objectStoreNames.contains("firstOS")) {
+			console.log("makng a new object store");
+			thisDB.createObjectStore("firstOS");
+		}
+
+	}
+
+	openRequest.onsuccess = function(e) {
+		console.log("running onsuccess");
+		db = e.target.result;
+		console.dir(db.objectStoreNames);
+	}	
+
+	openRequest.onerror = function(e) {
+		console.log("onerror!");
+		console.dir(e);
+	}
+
+});
+
+</script>
+</body>
+</html>

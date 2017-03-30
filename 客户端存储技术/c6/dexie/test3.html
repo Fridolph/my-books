@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="Dexie.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+
+$(document).ready(function() {
+
+
+	var db = new Dexie("dexie3");
+	db.version(1).stores({
+		people:"email,name,age"
+	});
+	db.open();
+	
+	db.people.put({ email:"raymondcamden@gmail.com", name:"Raymond", age:43 });
+	db.people.put({ email:"elric@google.com", name:"Elric", age:23 });
+	db.people.put({ email:"zula@google.com", name:"Zula", age:12 });
+
+	db.people.where("age").between(20,50).each(function(person) {
+		console.log("age match",JSON.stringify(person));
+	});
+
+	db.people.where("name").anyOf(["Elric","Zula"]).each(function(person) {
+		console.log("name match",JSON.stringify(person));
+	});
+});
+
+</script>
+</body>
+</html>

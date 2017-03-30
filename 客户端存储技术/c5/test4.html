@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+<h2>Add a Note</h2>
+<form>
+Title: <input type="text" id="title"><br/>
+Body:<br/>
+<textarea id="body"></textarea><br/>
+<button id="addNote">Add Note</button>	
+</form>
+
+<p/>
+
+<table id="notes" border="1"><tbody></tbody></table>
+
+<script>
+function websqlOK() {
+	return "openDatabase" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+
+	//No support? Go in the corner and pout.
+	if(!websqlOK()) return;
+
+	db = window.openDatabase("db1", "1", "Database 1", 5*1024*1024);
+
+    db.transaction(function(tx) {
+		tx.executeSql("create table if not exists notes(id INTEGER PRIMARY "+
+		"KEY AUTOINCREMENT, title TEXT, body TEXT, updated DATE)");
+    },dbError,function(tx) { 
+		ready();
+    });
+	
+});
+
+function dbError(e) {
+	console.log("Error", e);
+}
+
+var $title, $body, $notesTable;
+
+function ready() {
+	$("#addNote").on("click", addNote);
+	$title = $("#title");
+	$body = $("#body");
+	$notesTable = $("#notes tbody");
+	renderNotes();
+}
+
+function addNote(e) {
+	e.preventDefault();
+	//no validation
+	var title = $title.val();
+	var body = $body.val();
+	
+	db.transaction(function(tx) {
+		tx.executeSql("insert into notes(title,body,updated) "+
+		"values(?,?,?)", [title, body, new Date().getTime()]);
+    },dbError,function(tx) {
+		$title.val("");
+		$body.val("");
+		renderNotes();
+    });
+
+}
+
+function renderNotes() {
+	db.readTransaction(function(tx) {
+		tx.executeSql("select * from notes order by updated desc",[], 
+		function(tx, results) {
+			var rowStr = "";
+			for(var i=0;i<results.rows.length;i++) {				
+				var row = results.rows.item(i);
+				//use row.col
+				rowStr += "<tr><td>" + row.title + "</td>";
+				rowStr += "<td>" + row.body + "</td>";
+				var d = new Date();
+				d.setTime(row.updated);
+				rowStr += "<td>" + d.toDateString() + " " + d.toTimeString();
+				rowStr += "</td></tr>";
+			};
+			$notesTable.empty();
+			$notesTable.append(rowStr);
+		});
+    },dbError);
+	
+}
+</script>
+</body>
+</html>

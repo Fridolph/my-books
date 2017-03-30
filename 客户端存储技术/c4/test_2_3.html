@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+function idbOK() {
+	return "indexedDB" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+	
+	//No support? Go in the corner and pout.
+	if(!idbOK()) return;
+
+	var openRequest = indexedDB.open("ora_idb4",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+		console.log("running onupgradeneeded");
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			var peopleOS = thisDB.createObjectStore("people", 
+				{keyPath: "email"});
+				
+			peopleOS.createIndex("gender", "gender", {unique:false});
+			peopleOS.createIndex("ssn", "ssn", {unique:true});
+	
+		}
+
+		if(!thisDB.objectStoreNames.contains("notes")) {
+			var notesOS = thisDB.createObjectStore("notes", 
+				{autoIncrement:true});
+			notesOS.createIndex("title","title", {unique:false});	
+		}
+
+		if(!thisDB.objectStoreNames.contains("logs")) {
+			thisDB.createObjectStore("logs", 
+				{keyPath:"id", autoIncrement:true});
+		}
+
+	}
+
+	openRequest.onsuccess = function(e) {
+		console.log("running onsuccess");
+		db = e.target.result;
+		console.dir(db.objectStoreNames);
+	}	
+
+	openRequest.onerror = function(e) {
+		console.log("onerror!");
+		console.dir(e);
+	}
+
+});
+
+</script>
+</body>
+</html>

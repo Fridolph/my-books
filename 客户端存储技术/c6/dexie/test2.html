@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="Dexie.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+
+$(document).ready(function() {
+
+
+	var db = new Dexie("dexie1");
+	db.version(1).stores({
+		notes:"++id,text,created"
+	});
+	db.open();
+	
+	db.notes.add(
+		{ text:"foo",created:new Date().getTime() }
+	).then(function() {
+		 console.log("Note added.");
+	}).catch(function(err) {
+		console.dir(err);
+	});
+
+});
+
+</script>
+</body>
+</html>

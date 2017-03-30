@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+
+<h2>Delete Person</h2>
+<input type="text" id="email"> <button id="deletePerson">Delete Person</button>
+
+
+<script>
+function idbOK() {
+	return "indexedDB" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+	
+	//No support? Go in the corner and pout.
+	if(!idbOK()) return;
+
+	var openRequest = indexedDB.open("ora_idb5",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+		console.log("running onupgradeneeded");
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			var peopleOS = thisDB.createObjectStore("people", 
+				{keyPath: "email"});				
+	
+		}
+
+		if(!thisDB.objectStoreNames.contains("notes")) {
+			var notesOS = thisDB.createObjectStore("notes", 
+				{autoIncrement:true});
+		}
+
+	}
+
+	openRequest.onsuccess = function(e) {
+		console.log("running onsuccess");
+		db = e.target.result;
+		
+		//Start listening for button clicks
+		$("#deletePerson").on("click", deletePerson);
+	}	
+
+	openRequest.onerror = function(e) {
+		console.log("onerror!");
+		console.dir(e);
+	}
+
+});
+
+function deletePerson(e) {
+	var key = $("#email").val();
+	if(key === "") return;
+
+	var transaction = db.transaction(["people"],"readwrite");
+	var store = transaction.objectStore("people");
+
+	var request = store.delete(key);
+
+	request.onsuccess = function(e) {
+		console.log("Person deleted");
+		console.dir(e);
+	}	
+
+	request.onerror = function(e) {
+		console.log("Error");
+		console.dir(e);
+	}
+
+}
+
+</script>
+</body>
+</html>

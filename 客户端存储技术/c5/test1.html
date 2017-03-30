@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+function websqlOK() {
+	return "openDatabase" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+
+	//No support? Go in the corner and pout.
+	if(!websqlOK()) return;
+
+	db = window.openDatabase("db1", "1", "Database 1", 5*1024*1024);
+	
+	console.dir(db);
+
+});
+
+</script>
+</body>
+</html>

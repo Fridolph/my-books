@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+    
+<body>
+
+<h2>Add Person</h2>
+<input type="text" id="name" placeholder="Name"><br/>
+<input type="email" id="email" placeholder="Email"><br/>
+<input type="text" id="hobbies" placeholder="Hobbies"><br/>
+<button id="addPerson">Add Person</button>
+<p/>
+
+<h2>Search Hobbies</h2>
+<input type="text" id="hobby"> <button id="search">Search</button>
+
+<div id="results"></div>
+
+<script>
+function idbOK() {
+	return "indexedDB" in window;
+}
+
+var db;
+
+$(document).ready(function() {
+	
+	//No support? Go in the corner and pout.
+	if(!idbOK()) return;
+
+	var openRequest = indexedDB.open("ora_idb7",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+		console.log("running onupgradeneeded");
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			var peopleOS = thisDB.createObjectStore("people", 
+				{keyPath: "email"});				
+
+				peopleOS.createIndex("name", "name", 
+				{unique:false});
+				peopleOS.createIndex("hobbies", "hobbies", 
+				{unique:false, multiEntry: true});
+
+		}
+
+	}
+
+	openRequest.onsuccess = function(e) {
+		console.log("running onsuccess");
+		db = e.target.result;
+		
+		//Start listening for button clicks
+		$("#addPerson").on("click", addPerson);
+		$("#search").on("click", searchPeople);
+	}	
+
+	openRequest.onerror = function(e) {
+		console.log("onerror!");
+		console.dir(e);
+	}
+
+});
+
+function addPerson(e) {
+	var name = $("#name").val();
+	var email = $("#email").val();
+	var hobbies = $("#hobbies").val();
+	
+	if(hobbies != "") hobbies = hobbies.split(",");
+	
+	console.log("About to add "+name+"/"+email);
+
+	//Get a transaction
+	//default for OS list is all, default for type is read
+	var transaction = db.transaction(["people"],"readwrite");
+	//Ask for the objectStore
+	var store = transaction.objectStore("people");
+
+	//Define a person
+	var person = {
+		name:name,
+		email:email,
+		hobbies:hobbies,
+		created:new Date().getTime()
+	}
+
+	//Perform the add
+	var request = store.add(person);
+
+	request.onerror = function(e) {
+		console.log("Error",e.target.error.name);
+		//some type of error handler
+	}
+
+	request.onsuccess = function(e) {
+		console.log("Woot! Did it");
+	}
+}
+
+function searchPeople(e) {
+
+	var hobby = $("#hobby").val();
+
+	if(hobby == "") return;
+
+	var range = IDBKeyRange.only(hobby);
+	
+	var transaction = db.transaction(["people"],"readonly");
+	var store = transaction.objectStore("people");
+	var index = store.index("hobbies");
+
+	var s = "";
+
+	index.openCursor(range).onsuccess = function(e) { 
+		var cursor = e.target.result;
+		if(cursor) {
+			s += "<h2>Key "+cursor.key+"</h2><p>";
+			for(var field in cursor.value) {
+				s+= field+"="+cursor.value[field]+"<br/>";
+			}
+			s+="</p>";
+			cursor.continue();
+		}
+	}
+
+	transaction.oncomplete = function() {
+		//no results?
+		if(s === "") s = "<p>No results.</p>";
+		$("#results").html(s);
+	}
+
+}
+
+</script>
+</body>
+</html>

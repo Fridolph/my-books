@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cookie Test Two</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="cookies.js"></script>
+</head>
+<body>
+
+	<div id="resultDiv"></div>
+
+	<script>		
+	$(document).ready(function() {
+
+		//initial value             
+		var visited = 0;
+		
+		//Check to see if we have the cookie...
+		if(docCookies.hasItem("visited2")) {
+			//and get it
+			visited = docCookies.getItem("visited2");
+		}
+		
+		visited++;
+		
+		//update
+		docCookies.setItem("visited2", visited, Infinity);
+		
+		$("#resultDiv").text("You have visited this site "+ visited + 
+			" times.");
+		
+	});
+	</script>
+
+</body>
+</html>

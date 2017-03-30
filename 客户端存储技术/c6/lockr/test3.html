@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="lockr.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+
+$(document).ready(function() {
+	
+	var coolness = Lockr.get("coolness", "Infinity!");
+	console.log(coolness);
+	
+	Lockr.set("nerdness", "of course");
+	var nerdness = Lockr.get("nerdness", "nope");
+	console.log(nerdness);
+
+});
+
+</script>
+</body>
+</html>

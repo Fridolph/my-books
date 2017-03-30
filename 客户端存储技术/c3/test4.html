@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>WebStorage Event Test</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+</head>
+<body>
+
+	<form id="myForm">
+	
+		<p>
+		Test Value:
+		<input type="text" id="test">
+		</p>
+			
+	</form>
+
+	<script>		
+	$(document).ready(function() {
+
+		if(window.localStorage) {
+	
+			if(localStorage.getItem("testValue")) {
+				$("#test").val(localStorage.getItem("testValue"));
+			}
+			
+			//Listen for all <input> fields and their input event
+			$("input").on("input", function(e) {
+				var test = $("#test").val();
+				localStorage.setItem("testValue", test);
+				console.log("stored the test value.");
+			});
+			
+			$(window).on("storage", function(e) {
+				console.log("storage event fired");
+				$("#test").val(e.originalEvent.newValue);
+			});
+				
+		}
+			
+	});
+	</script>
+
+</body>
+</html>

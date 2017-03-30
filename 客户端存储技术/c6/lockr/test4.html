@@ -1,0 +1,38 @@
+
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script><script src="../../jquery.js"></script>
+    <script src="lockr.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+
+$(document).ready(function() {
+	
+	Lockr.set("testS", []);
+
+	Lockr.sadd("testS", 1);
+	Lockr.sadd("testS", 2);
+	Lockr.sadd("testS", 3);
+	Lockr.sadd("testS", 2);
+	Lockr.sadd("testS", 2);
+	Lockr.sadd("testS", 1);
+
+	console.log(Lockr.get("testS"));
+	console.log(Lockr.smembers("testS"));
+	
+	Lockr.srem("testS", 3);
+	
+	console.log(Lockr.smembers("testS"));
+	
+	console.log(Lockr.sismember("testS", 3));
+	
+});
+
+</script>
+</body>
+</html>

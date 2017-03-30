@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src = 
+	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="lockr.min.js"></script>
+</head>
+    
+<body>
+
+<script>
+
+$(document).ready(function() {
+	
+	Lockr.set("name", "Ray");
+	Lockr.set("age", 43);
+	
+	var name = Lockr.get("name");
+	var age = Lockr.get("age");
+	console.log(name, age + 1);
+	
+	//compare to localStorage
+	localStorage.setItem("age_ls", 43);
+	console.log(localStorage.getItem("age_ls")+1);
+
+});
+
+</script>
+</body>
+</html>
