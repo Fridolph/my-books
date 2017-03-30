@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2>使用web存储</h2>
+  <script>
+    var names = ['fri', 'yk'];
+    localStorage.setItem('names', JSON.stringify(names));
+
+    var storedNames = JSON.parse(localStorage.getItem('names'));
+
+    var div = document.createElement('div');
+    div.innerText = storedNames;
+    document.body.appendChild(div);
+  </script>
+</body>
+</html>

@@ -1,75 +1,97 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>WebStorage Test Two</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
-	<script type="text/javascript" src = 
-	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-
+	<script type="text/javascript" src="../jquery.js"></script>
 </head>
+
 <body>
-
-
 	<form id="myForm">
-	
+
 		<p>
-		Your Name:
-		<input type="text" id="name" name="name">
+			Your Name:
+			<input type="text" id="name" name="name">
 		</p>
-	
+
 		<p>
-		Your Age:
-		<input type="number" id="age" name="age">
+			Your Age:
+			<input type="number" id="age" name="age">
 		</p>
-	
+
 		<p>
-		Your Email:
-		<input type="email" id="email" name="email">
+			Your Email:
+			<input type="email" id="email" name="email">
 		</p>
-	
+
 		<p>
 			<input type="submit">
 		</p>
-		
 	</form>
 
-	<script>		
-	$(document).ready(function() {
-
-		if(window.localStorage) {
-	
-			//If I have data, fetch it and preset
-			if(localStorage.getItem("personForm")) {
-				var person = 
-				JSON.parse(localStorage.getItem("personForm"));
-				$("#name").val(person.name);
-				$("#age").val(person.age);
-				$("#email").val(person.email);
-				console.log("restored from storage");
+	<script>
+		/*$(function() {
+			// 1. 判断是否支持localStorage
+			if (window.localStorage) {
+				// 2. 加载表单数据
+				if (localStorage.getItem('personForm')) {
+					var person = JSON.parse(localStorage.getItem('personForm'));
+					$("#name").val(person.name);
+					$("#age").val(person.age);
+					$("#email").val(person.email);
+				}
+				// 3. 表单事件，blur时储存到localStorage
+				$("#myForm input").on('blur', function() {
+					var name = $("#name").val();
+					var age = $("#age").val();
+					var email = $("#email").val();
+					var person = {
+						name,
+						age,
+						email
+					};
+					localStorage.setItem('personForm', JSON.stringify(person));
+					console.log('stored the formdata... ');
+				});
+				// 4.表单提交清除储存的数据
+				$("#myForm").on('submit', function(e) {
+					localStorage.removeItem('personForm');
+					return true;
+				});
 			}
-			
-			//Listen for all <input> fields and their input event
-			$("input").on("input", function(e) {
-				var name = $("#name").val();
-				var age = $("#age").val();
-				var email = $("#email").val();
-				var person = {"name":name, "age":age, "email":email};
-				localStorage.setItem("personForm", 
-					JSON.stringify(person));
-				console.log("stored the form...");
-			});
-				
-			//form handler should clear storage
-			$("#myForm").on("submit",function(e) {
-				localStorage.removeItem("personForm");
-				return true;
-			});
-		}
-			
-	});
+		});*/
+
+		$(function() {
+			if (window.localStorage) {
+				if (localStorage.getItem('personForm')) {
+					var person = JSON.parse(localStorage.getItem('personForm'));
+					$("#name").val(person.name);
+					$("#age").val(person.age);
+					$("#email").val(person.email);
+					console.log('已读取上一次的缓存数据');
+				}
+				$("#myForm input").on('blur', function(e) {
+					var name = $("#name").val();
+					var age = $("#age").val();
+					var email = $("#email").val();
+					var personData = {
+						name,
+						age,
+						email
+					};
+					localStorage.setItem('personForm', JSON.stringify(personData));					
+				});
+				$("#myForm").on('submit', function(e) {
+					localStorage.removeItem('personForm');
+					return true;
+				});
+			}
+		});
 	</script>
 
 </body>
+
 </html>

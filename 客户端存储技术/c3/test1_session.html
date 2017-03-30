@@ -5,8 +5,7 @@
 	<title>WebStorage Test One</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
-	<script type="text/javascript" src = 
-	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.js"></script>
 </head>
 <body>
 
@@ -21,8 +20,13 @@
 			else numHits = parseInt(numHits, 10);
 			numHits++;
 			sessionStorage.setItem("numHits",numHits);
-			$("#resultDiv").text("You have visited this site " + 
+			if(numHits === 1) {
+				$("#resultDiv").text("You have visited this site " + 
+				numHits +" time today.");
+			} else {
+				$("#resultDiv").text("You have visited this site " + 
 				numHits +" times today.");
+			}			
 		}
 		
 	});

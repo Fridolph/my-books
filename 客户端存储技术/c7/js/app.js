@@ -7,21 +7,21 @@ var $results;
 
 $(document).ready(function() {
 
-	myDb = new Dexie("employee_database");
+	myDb = new Dexie('employee_database');
 	myDb.version(1).stores({
-		employees:"++id,&email,name.first,name.last"
+		employees:'++id,&email,name.first,name.last'
 	});
 	myDb.open();
 	
-	$firstNameField = $("#firstname");
-	$lastNameField = $("#lastname");
-	$results = $("#resultsDisplay");
+	$firstNameField = $('#firstname');
+	$lastNameField = $('#lastname');
+	$results = $('#resultsDisplay');
 
 	//Do we have the data?
 	haveData().then(function(hasData) {
 		
 		if(!hasData) {
-			console.log("I need to setup the db.");	
+			console.log('I need to setup the db.');	
 			setupData().then(appReady);
 		} else {
 			appReady();
@@ -30,7 +30,7 @@ $(document).ready(function() {
 	});
 	
 	//used for result templates
-	var source   = $("#result-template").html();
+	var source   = $('#result-template').html();
 	resultTemplate = Handlebars.compile(source);
 
 });
@@ -41,8 +41,8 @@ I handle UI/UX/etc stuff for when the data is ready to be searched.
 function appReady() {
 	console.log('appReady fired, lets do this');	
 	//show the search form
-	$("#searchFormDiv").show();
-	$("#searchForm").on("submit", doSearch);
+	$('#searchFormDiv').show();
+	$('#searchForm').on('submit', doSearch);
 }
 
 function doSearch(e) {
@@ -58,14 +58,14 @@ function doSearch(e) {
 	myDb.transaction('r', myDb.employees, function() {
 		
 		if(fName !== '') {
-			myDb.employees.where("name.first").startsWithIgnoreCase(fName)
+			myDb.employees.where('name.first').startsWithIgnoreCase(fName)
 			.each(function(emp) {
 				fnEmps.push(emp);	
 			});
 		}
 		
 		if(lName !== '') {
-			myDb.employees.where("name.last").startsWithIgnoreCase(lName)
+			myDb.employees.where('name.last').startsWithIgnoreCase(lName)
 			.each(function(emp) {
 				lnEmps.push(emp);
 			});
@@ -110,7 +110,7 @@ function doSearch(e) {
 				$results.append(result);
 			});
 		} else {
-			$results.html("Sorry, nothing matched your search.");	
+			$results.html('Sorry, nothing matched your search.');	
 		}
 		
 	}).catch(function(err) {
@@ -127,7 +127,7 @@ an asynch process.
 function haveData() {
 	var def = $.Deferred();
 
-	var lastFetch = Lockr.get("lastDataSync");
+	var lastFetch = Lockr.get('lastDataSync');
 	
 	if(lastFetch) def.resolve(true);
 	else def.resolve(false);
@@ -139,19 +139,19 @@ function setupData() {
 	var def = $.Deferred();
 
 	//setup modal options
-	$("#setUpModal").modal({
+	$('#setUpModal').modal({
 		keyboard: false
 	});
 	
 	//now show it
-	$("#setupModal").modal("show");
+	$('#setupModal').modal('show');
 
 	//now, fetch the remote data
-	$.get("data/users.json", function(data) {
-		console.log("Loaded JSON, have "+data.results.length+" records.");
+	$.get('data/users.json', function(data) {
+		console.log('Loaded JSON, have '+data.results.length+' records.');
 		console.dir(data.results[0].user);
 
-		myDb.transaction("rw", myDb.employees, function() {
+		myDb.transaction('rw', myDb.employees, function() {
 			
 			data.results.forEach(function(rawEmp) {
 				
@@ -163,8 +163,8 @@ function setupData() {
 				var emp = {
 					cell:rawEmp.user.cell,
 					dob:rawEmp.user.dob,
-					email:rawEmp.user.email.split("@")[0]+"." 
-					+ rawEmp.user.username + "@gmail.com",
+					email:rawEmp.user.email.split('@')[0]+'.' 
+					+ rawEmp.user.username + '@gmail.com',
 					gender:rawEmp.user.gender,
 					location:rawEmp.user.location,
 					name:rawEmp.user.name,
@@ -178,18 +178,18 @@ function setupData() {
 		}).then(function() {
 
 			//hide the modal
-			$("#setupModal").modal("hide");
+			$('#setupModal').modal('hide');
 			
 			//store that we synced
-			Lockr.set("lastDataSync", new Date());
+			Lockr.set('lastDataSync', new Date());
 			
 			def.resolve();
 			
 		}).catch(function(err) {
-			console.log("error in transaction", err);
+			console.log('error in transaction', err);
 		});
 		
-	}, "json");
+	}, 'json');
 	
 	return def.promise();	
 

@@ -1,8 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<script type="text/javascript" src = 
-	"http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.js"></script>
 </head>
     
 <body>
@@ -19,7 +18,7 @@ $(document).ready(function() {
 	//No support? Go in the corner and pout.
 	if(!idbOK()) return;
 
-	var openRequest = indexedDB.open("ora_idb1",1);
+	var openRequest = indexedDB.open("test_db",1);
 
 	openRequest.onupgradeneeded = function(e) {
 		console.log("running onupgradeneeded");
