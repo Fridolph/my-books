@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #tabs {}
+    #tabs li {float: left; list-style:none; margin: 0 10px;}
+    #tabs .active{color:red;}
+
+    .clearfix {}
+    .clearfix:after {
+      content: ""; display: table; clear:both; overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <ul id="tabs" class="clearfix">
+    <li data-tab="users">Users</li>
+    <li data-tab="groups">Groups</li>
+  </ul>
+  <div id="tabsContent">
+    <div data-tab="users">...tab1</div>
+    <div data-tab="groups">...tab2</div>
+  </div>
+
+  <script src="../jquery.min.js"></script>
+  <script>
+    $.fn.tabs = function(control) {
+      var element = $(this);
+      control = $(control);
+
+      element.find('li').on('click', function() {
+        // 从列表中添加或删除active类
+        element.find('li').removeClass('active');
+        $(this).addClass('active');
+
+        // 给tabContent添加或删除active类
+        var tabName = $(this).attr('data-tab');
+        control.find(">[data-tab]").removeClass('active');
+        control.find(">[data-tab='" + tabName + "']").addClass('active');
+      });
+
+      // 激活第1个选项卡
+      element.find('li:first').addClass('active');
+
+      // 返回this以启用链式调用
+      return this;
+    }
+
+    // 插件位于jQuery的prototype里，因此基于$实例来调用
+    $('#tabs').tabs('#tabContent');
+  </script>
+</body>
+</html>

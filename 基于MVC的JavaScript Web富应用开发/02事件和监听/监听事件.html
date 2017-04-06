@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{padding:0;margin:0;}
+    html,body{
+      width: 100vw;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <button id="btn">click</button>
+  <button id="remove">remove</button>
+  <button id="add">add</button>
+  <input type="text" id="text" /><br>
+  <p id="para"></p>
+
+  <script>
+    var btn = document.querySelector('#btn');
+    var rmv = document.querySelector('#remove');
+    var add = document.querySelector('#add');
+    var txt = document.querySelector('#text');
+
+    btn.addEventListener('click', listener, false);
+
+    rmv.addEventListener('click', function() {
+      btn.removeEventListener('click', listener);
+    }, false);
+
+    add.addEventListener('click', function() {
+      btn.addEventListener('click', listener, false);
+    }, false);
+
+    txt.addEventListener('keypress', listener, false);
+
+    function listener(e) {
+      document.getElementById('para').innerHTML = `x坐标：${e.pageX}, y坐标：${e.pageY}`;
+    }
+
+    document.body.addEventListener('mousemove', listener, false);
+  </script>
+</body> 
+</html>
