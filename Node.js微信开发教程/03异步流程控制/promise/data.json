@@ -1,0 +1,37 @@
+{
+  "results": [
+    {
+      "user": {
+        "gender": "female",
+        "name": {
+          "title": "ms",
+          "first": "mandy",
+          "last": "warren"
+        },
+        "location": {
+          "street": "4951 the grove",
+          "city": "Athlone",
+          "state": "maryland",
+          "zip": 63705
+        },
+        "email": "mandy.warren@example.com",
+        "username": "browndog321",
+        "password": "costello",
+        "salt": "4D3ie9M8",
+        "md5": "816f00be4616ad15adcfa0f9730680d3",
+        "sha1": "2b7755a641233ae85ccad0131aaa84f46aa5f1bb",
+        "sha256": "eaff26130662eec2826031dddcabfd65462bd30f274343d15dbe33e980bd4074",
+        "registered": 1007678058,
+        "dob": 556481942,
+        "phone": "011-577-1451",
+        "cell": "081-998-0927",
+        "PPS": "3021616T",
+        "picture": {
+          "large": "https://randomuser.me/api/portraits/women/65.jpg",
+          "medium": "https://randomuser.me/api/portraits/med/women/65.jpg",
+          "thumbnail": "https://randomuser.me/api/portraits/thumb/women/65.jpg"
+        }
+      }
+    }
+  ]
+}
