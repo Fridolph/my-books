@@ -1,14 +1,13 @@
 # 读书笔记
 
-> 羡慕大牛高超的记忆力与理解力，本着勤能补拙的认知，不知不觉养成了敲书的“坏习惯”。这个仓库主要用来列出我读过的书，记录书中经典的代码片段和自己的demo示例，还有就是读书笔记了。
-
 > 作为一名攻城狮(误~)，建立自己的知识仓库是很有必要的，结合着思维脑图等辅助工具能帮助自己更好地获取吸收知识。互联网行业就是与信息与变化打交道，作为一名前端er，JavaScript等基本功是底气，而架构与其他知识体系则需慢慢积累。在精研专业领域把视野慢慢拓宽，本书库以前端必精语言JS为主，当然，不仅仅是前端，大前端，全栈——生命不息，折腾不止，欢迎多多交流分享。
+
+羡慕大牛高超的记忆力与理解力，本着勤能补拙的认知，不知不觉养成了敲书的“坏习惯”。这个仓库主要用来列出我读过的书，记录书中经典的代码片段和自己的demo示例，还有就是读书笔记了。
 
 ps 标题只是大气和激励自己…  学海无涯，看官一笑
 
-[更多细节请移步我的Github仓库](https://github.com/Fridolph/my-books)
 
-## 近期购买|阅读 (最近3本)
+## 近期购买 | 阅读 | 推荐 (排名不分先后)
 
 ### 《深入理解ES6》 Nicholas C. Zakas / 2017-7
 
@@ -18,11 +17,11 @@ ps 标题只是大气和激励自己…  学海无涯，看官一笑
 
 ---
 
-### 《CSS核心技术详解》 肖志华 / 2017-6
+### 《前端架构设计》 Micah Godbolt / 2017-4
 
-<img alt="CSS核心技术详解" src="https://img3.doubanio.com/lpic/s29459174.jpg" />
+<img alt="CSS核心技术详解" src="http://file.ituring.com.cn/SmallCover/01006227398faf4a1a1d" />
 
-《CSS核心技术详解》内容精练、实例丰富、通俗易懂，可作为广大CSS设计人员和前端开发人员的参考书。
+作者结合自己在Red Hat公司的项目实战经历，探讨了前端架构原则和前端架构的核心内容，包括工作流程、测试流程和文档记录，以及作为前端架构师所要承担的具体开发工作
 
 ---
 
@@ -100,11 +99,11 @@ JavaScript语言非常重要，相关的技术图书也很多，但没有任何�
 
 ---
 
-### 《JavaScript权威指南(第6版)》 David Flanagan / 淘宝前端 / 2012-4
+### 《JavaScript学习指南》（第3版） Ethan Brown / 2017-7
 
-<img alt="JavaScript权威指南(第6版)" src="https://img3.doubanio.com/lpic/s8958854.jpg" />
+<img alt="JavaScript学习指南" src="https://img1.doubanio.com/mpic/s6633627.jpg" /> 
 
-本书是程序员学习核心JavaScript语言和由Web浏览器定义的JavaScript API的指南和综合参考手册，工具书，有时间耐心可以慢慢读，不过我买来一直压箱底了……惭愧。
+和犀牛书封面一样，不过页数少了一半多，最新的有讲到ES6相关的介绍，其实JS类进阶书都大同小异，关键是我们要把这些点都一一克服、理解，如果像我一样读不下去犀牛书的可以读读这本，效果挺好
 
 ---
 
@@ -114,7 +113,17 @@ JavaScript语言非常重要，相关的技术图书也很多，但没有任何�
 
 JavaScript是Web开发中最重要的一门语言，它强大而优美。无论是桌面开发，还是移动应用。JavaScript都是必须掌握的技术。W3C的DOM标准是开发Web应用的基石。已经得到所有现代浏览器的支持，这使得跨平台Web开发成了一件轻松惬意的事。
 
+---
+
+### 《JavaScript权威指南(第6版)》 David Flanagan / 淘宝前端 / 2012-4
+
+<img alt="JavaScript权威指南(第6版)" src="https://img3.doubanio.com/lpic/s8958854.jpg" />
+
+本书是程序员学习核心JavaScript语言和由Web浏览器定义的JavaScript API的指南和综合参考手册，工具书，有时间耐心可以慢慢读，不过我买来一直压箱底了……惭愧。
+
+
 ## 性能与工程化
+
 
 ### 《JavaScript设计模式与开发实践》 曾探 / 2015-5
 
@@ -196,6 +205,14 @@ JavaScript是Web开发中最重要的一门语言，它强大而优美。无论�
 
 ---
 
+### 《HTML5基础知识、核心技术与前沿案例》 刘欢 / 2016-10
+
+<img alt="HTML5基础知识、核心技术与前沿案例" src="https://img1.doubanio.com/lpic/s29137878.jpg" />
+
+《HTML5基础知识、核心技术与前沿案例 》是一本引导初、中级学习者深入了解并有效掌握HTML5核心技巧的技术实战书籍，全书采用“基础知识+案例驱动”的双轨模式，精心安排了大量经典的HTML5设计实战案例。
+
+---
+
 ### 《CSS揭秘》 Lea Verou / 2016-4
 
 <img alt="CSS揭秘" src="https://img1.doubanio.com/lpic/s28659699.jpg" />
@@ -252,6 +269,30 @@ JavaScript是Web开发中最重要的一门语言，它强大而优美。无论�
 
 ---
 
+### 《Web API的设计与开发》 水野贵明 / 2017-5
+
+<img alt="WebAPI的设计与开发" src="http://file.ituring.com.cn/SmallCover/1705413f5c52cffff0ce" />
+
+本书不仅适合在工作中需要设计、开发或修改Web API的技术人员阅读，对想了解技术细节的产品经理、运维人员而言，也有一定的参考价值。
+
+---
+
+### 《Web安全开发指南》 John Paul Mueller / 2017-7
+
+<img alt="Web安全开发指南" src="https://img3.doubanio.com/lpic/s27269296.jpg" />
+
+详细介绍了Web安全开发的必备知识，旨在让前端开发相关人士了解新形势下的安全技能，涉及从最新的智能手机到老旧的台式计算机等各种设备，并且不限定平台
+
+---
+
+### 《前端架构设计》 Micah Godbolt / 2017-4
+
+<img alt="前端架构设计" src="http://file.ituring.com.cn/SmallCover/01006227398faf4a1a1d" />
+
+作者结合自己在Red Hat公司的项目实战经历，探讨了前端架构原则和前端架构的核心内容，包括工作流程、测试流程和文档记录，以及作为前端架构师所要承担的具体开发工作
+
+---
+
 ### 《MySQL必知必会》 Ben Forta / 2009-1
 
 <img alt="MySQL必知必会" src="https://img3.doubanio.com/lpic/s29459174.jpg" />
@@ -290,9 +331,21 @@ JavaScript是Web开发中最重要的一门语言，它强大而优美。无论�
 
 本书是一本针对所有层次的Python 读者而作的Python 入门书。全书分两部分：第一部分介绍用Python 编程所必须了解的基本概念，包括matplotlib、NumPy 和Pygal 等强大的Python 库和工具介绍，以及列表、字典、if 语句、类、文件与异常、代码测试等内容
 
+## 软实力
+
+
+
 ## 产品与设计
 
 ### 《人人都是产品经理》 苏杰 / 2010-4
+
+<img alt="人人都是产品经理" src="https://img1.doubanio.com/lpic/s4241529.jpg" />\
+
+产品入门书，这类适合当小说感，带着轻松愉快的心情，好了，一两晚估计就翻完了，然后呢？ Get到产品技能……（并不会）
+
+---
+
+### 《人人都是设计师》 Rebecca Hagen / Kim Golombisky / 2016-9
 
 <img alt="人人都是产品经理" src="https://img1.doubanio.com/lpic/s4241529.jpg" />\
 
