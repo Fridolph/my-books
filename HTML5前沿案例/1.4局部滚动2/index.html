@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>局部滚动</title>
+  <style>
+    html, body {
+      height: 100%;
+      width:100%;
+    }
+    body {
+      position:relative;
+      background: #06c url('http://haomeeweb.b0.upaiyun.com/2016/06/13/11/28/43/801547fafcbe32449ceb8df9d9f2ce29.jpg') no-repeat;
+      /*让背景图固定不动*/
+      background-attachment: fixed;
+      background-size: cover;
+      margin:0;padding: 0;color:#fff;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    #title {
+      position:absolute;  top: 10%; left:8%;
+    }
+    #title h1 {
+      font-size: 56px;text-transform: uppercase;
+    }
+    #title ul {
+      margin: 0; padding: 0; list-style: none;
+    }
+    #title li {display: inline-block;}
+    #title li a {color:#fff;}
+    /* ------------------------ */
+    #container {
+      position:absolute;bottom: 10%; width: 100%; overflow: auto;
+    }
+    #container::-webkit-scrollbar {
+      background:rgba(255,222,239,0.5);
+    }
+    #container::-webkit-scrollbar-button  {
+      background:rgba(205,222,239,0.3);
+    }
+    #container::-webkit-scrollbar-thumb {
+      background: rgba(70,60,80,0.6);border-radius: 4px;
+    }
+    #scroll {
+      width: 3200px;background:rgba(0,0,0,0.2);padding: 30px;
+    }
+    #scroll::after {
+      content: '';display:table;clear:both;overflow:hidden;
+    }
+    .article {
+      box-sizing:border-box;display:block;height: 240px;width: 800px;
+      padding-right:30px;float: left;
+    }
+    .article .text {
+      float: left; margin-right: 40px;
+    }
+    .article h1{
+      font-weight: normal;
+    }
+    .article img {
+      margin-right: 20px;float: left;
+    }
+  </style>
+</head>
+<body>
+  <div id="title">
+    <h1>The Scroll Effect</h1>
+    <ul>
+      <li id="btn_wrapper">
+        <a id="btn_0" href="javascript:;">PIC1</a>
+        <a id="btn_1" href="javascript:;">PIC2</a>
+        <a id="btn_2" href="javascript:;">PIC3</a>
+        <a id="btn_3" href="javascript:;">PIC4</a>
+      </li>
+    </ul>
+  </div>
+  <div id="container">
+    <div id="scroll">
+      <div class="article" id="pic1">
+        <div class="text">
+          <h1>Duis volutpat</h1>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+        </div>
+        <img src="../img/sm-1.jpg" width="300" height="240"/>
+      </div>
+      <div class="article" id="pic2">
+        <div class="text">
+          <h1>Duis volutpat</h1>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+        </div>
+        <img src="../img/sm-2.jpg" width="300" height="240"/>
+      </div>
+      <div class="article" id="pic3">
+        <div class="text">
+          <h1>Duis volutpat</h1>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+        </div>
+        <img src="../img/sm-3.jpg" width="300" height="240"/>
+      </div>
+      <div class="article" id="pic4">
+        <div class="text">
+          <h1>Duis volutpat</h1>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+          <p>Phasellus hendrerit ... vitae vitae  viverra nisl.</p>
+        </div>
+        <img src="../img/sm-4.jpg" width="300" height="240"/>
+      </div>
+    </div>
+  </div>
+
+  <script src="../jquery.js"></script>
+  <script>
+    $(function() {
+      var c1_t = $('#pic1').offset().left;
+      var c2_t = $('#pic2').offset().left;
+      var c3_t = $('#pic3').offset().left;
+      var c4_t = $('#pic4').offset().left;
+      var buffer = 30;
+      var $btn = $('#btn_wrapper').find('a');
+      var offsetLeftArr = [c1_t, c2_t, c3_t, c4_t];
+
+      for (let i = 0; i <= $btn.length; i++) {
+        $('#btn_' + i).click(function() {
+          $('#container').animate({
+            scrollLeft: offsetLeftArr[i] - buffer + 'px'
+          }, 600)
+        });
+      }
+    });
+  </script>
+</body>
+</html>
