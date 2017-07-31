@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>局部滚动</title>
+  <style>
+    html, body {
+      height: 100%;
+      width:100%;
+    }
+    body {
+      position:relative;
+      background: #06c url('http://haomeeweb.b0.upaiyun.com/2016/06/13/11/28/43/801547fafcbe32449ceb8df9d9f2ce29.jpg') no-repeat;
+      /*让背景图固定不动*/
+      background-attachment: fixed;
+      background-size: cover;
+      margin:0;padding: 0;color:#fff;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    #title {
+      position:fixed;  bottom: 20%; left:8%;
+    }
+    #title h1 {
+      font-size: 56px;text-transform: uppercase;
+    }
+    #title ul {
+      margin: 0; padding: 0; list-style: none;
+    }
+    #title li {display: inline-block;}
+    #title li a {color:#fff;}
+    /* ------------------------ */
+    #scroll {
+      position:absolute;left:65%;width: 400px;padding: 0 30px;height: 100%;overflow: auto;
+      background:rgba(255,255,255,0.15);margin:0;
+    }
+    #scroll::-webkit-scrollbar{
+      width: 16px;
+      background: rgba(0,0,0,0.4);
+    }
+    #scroll::-webkit-scrollbar-thumb {
+      background: rgba(160,170,200,0.6);border-radius: 4px;
+    }
+    #scroll .article {
+      width: 300px; padding-bottom:20px; border-bottom: 2px dotted #fff;
+    }
+    #scroll .article h1{
+      font-weight: normal;
+    }
+    #scroll .article img {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="title">
+    <h1>The Scroll Effect</h1>
+    <ul>
+      <li id="btn_wrapper">
+        <a id="btn_0" href="javascript:;">PIC1</a>
+        <a id="btn_1" href="javascript:;">PIC2</a>
+        <a id="btn_2" href="javascript:;">PIC3</a>
+        <a id="btn_3" href="javascript:;">PIC4</a>
+      </li>
+    </ul>
+  </div>
+  <div id="scroll">
+    <div class="article" id="pic1">
+      <h1>Duis volutpat</h1>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <img src="../img/sm-1.jpg" />
+    </div>
+    <div class="article" id="pic2">
+      <h1>Duis volutpat</h1>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <img src="../img/sm-2.jpg" />
+    </div>
+    <div class="article" id="pic3">
+      <h1>Duis volutpat</h1>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <img src="../img/sm-3.jpg" />
+    </div>
+    <div class="article" id="pic4">
+      <h1>Duis volutpat</h1>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <p>Phasellus hendrerit ... vitae viverra nisl.</p>
+      <img src="../img/sm-4.jpg" />
+    </div>
+  </div>
+
+  <script src="../jquery.js"></script>
+  <script>
+    $(function() {
+      var c1_t = $('#pic1').offset().top;
+      var c2_t = $('#pic2').offset().top;
+      var c3_t = $('#pic3').offset().top;
+      var c4_t = $('#pic4').offset().top;
+      var $btn = $('#btn_wrapper').find('a');
+      var offsetTopArr = [c1_t, c2_t, c3_t, c4_t];
+
+      for (let i = 0; i <= $btn.length; i++) {
+        $('#btn_' + i).click(function() {
+          $('#scroll').animate({
+            scrollTop: offsetTopArr[i] + 'px'
+          }, 600)
+        });
+      }
+    });
+  </script>
+</body>
+</html>
