@@ -327,3 +327,265 @@ Square类通过`extends关键字`继承Rectangle类，在Square构造函数中�
 如果选择不使用构造函数，则当创建新的类实例时会自动调用super()并传入所有参数
 
 **使用super()注意事项**
+
+* 只可在派生类的构造函数中使用super()
+* 在构造函数中访问this之前一定要调用super() `它负责初始化this`
+* 若不想调用super()，唯一方法是让类的构造函数返回一个对象
+
+### 类方法遮蔽
+
+派生类中的方法总会覆盖基类中的同名方法
+
+```js
+class Square extends Rectangle {
+  constructor(length) {
+    super(length, length);
+  }
+  // 覆盖并遮蔽Rectangle.prototype.getArea()方法
+  getArea() {
+    return this.length * this.length;
+  }
+}
+```
+
+由于Square里定义了getArea方法，便不能在Square的实例中调用Rectangle.prototype.getArea方法。若想调用，可如下使用：
+
+```js
+class Square extends Rectangle {
+  constructor(length) {
+    super(length, length);
+  }
+  // 覆盖遮蔽后调用Rectangle.prototype.getArea()
+  getArea() {
+    return super.getArea();
+  }
+}
+```
+
+以这种方法使用super，this的值会被自动正确设置
+
+### 静态成员继承
+
+如果基类有静态成员，那么这些静态成员在派生类中也可用。
+
+```js
+class Rectangle {
+  constructor(length, width) {
+    this.length = length;
+    this.width = width;
+  }
+  getArea() {
+    return this.length * this.length;
+  }
+  static create(length, width) {
+    return new Rectagnle(length, width);
+  }
+}
+// 
+class Square extends Rectangle {
+  constructor(length) {
+    // 等价于Rectangle.call(this, length, length)
+    super(length, length)
+  }
+}
+var rect = Square.create(3, 4);
+console.log(rect instanceof Rectangle); // true
+console.log(rect.getArea()); // 12
+console.log(rect instanceof Square); // false
+```
+
+以上代码中，新的静态方法create()被添加到Rectangle类中，继承后的Square.create()与Rectangle.create()的行为相似
+
+### 派生自表达式的类
+
+只要表达式可以被解析为一个函数并且具有[[Construct]]属性和原型，那么就可以用extends进行派生。我们还是由下面的例子来看：
+
+```js
+function Rectangle(length, width) {
+  this.length = length;
+  this.width = width;
+}
+Rectangle.prototype.getArea = function() {
+  return this.length * this.width;
+}
+class Square extends Rectangle {
+  constructor(length) {
+    super(length, width);
+  }
+}
+var x = new Square(3);
+console.log(x.getArea()); // 9
+console.log(x instanceof Rectangle); // true
+```
+
+Rectagnle是ES5风格的构造函数，Square是一个类，由于Rectangle具有[[Construct]]属性和原型，因此Square类可以直接继承它。
+由于可以动态确定使用哪个基类，因而可以创建不同的继承方法。例如：
+
+```js
+let SerializableMixin = {
+  serialize() {
+    return JSON.stringify(this);
+  }
+}
+let AreaMixin = {
+  getArea() {
+    return this.length * this.width;
+  }
+}
+function mixin(...mixins) {
+  var base = function() {}
+  Object.assign(base.prototype, ...mixins);
+  return base;
+}
+class Square extends mixin(AreaMixin, SerializableMixin) {
+  constructor(length) {
+    super();
+    this.length = length;
+    this.width = length;
+  }
+}
+var x = new Square(3);
+console.log(x.getArea()); // 9
+console.log(x.serialize()); // "{"length": 3, "width": 3}"
+```
+
+mixin函数会用所有mixin对象的自有属性动态填充新函数的原型，如果多个mixin对象具有相同的属性，那么只有最后一个被添加的属性被保留
+
+> 在`extends`后可以使用任意表达式，但不是所有表达式最终都能生成合成的类。如果使用null或生成器函数会导致错误，类在这些情况下没有[[Construct]]属性，尝试为其创建新的实例会导致程序无法调用[[Construct]]而报错
+
+### 内建对象的继承
+
+在ES5的传统继承方式中，先由派生类型创建this的值，然后调用基类型的构造函数。this的值开始指向构造函数的实例，但是随后会被来自内建对象的其他属性所修饰。
+ES6中的类则于之相反，先由基类创建this的值，然后派生类的构造函数再修改这个值，所以一开始可以通过this访问基类的所有内建功能，然后再正确地接受所有与之相关的功能。
+以下示例是一个基于类生成特殊数组的实践：
+
+```js
+class MyArray extends Array {}
+var colors = new MyArray();
+colors[0] = 'red';
+console.log(colors.length); // 1
+colors.length = 0;
+console.log(colors[0]); // undefined
+```
+
+### Symbol.species属性
+
+内建对象继承的一个使用之处是，原本在内建对象中返回实例自身的方法将自动返回派生类的实例。
+
+```js
+class MyArray extends Array {}
+let items = new MyArray(1,2,3,4),
+  subitems = items.slice(1, 3);
+console.log(items instanceof MyArray); // true
+console.log(subitems instanceof MyArray); // true
+```
+
+这里slice()方法返回的是MyArray的实例，浏览器引擎背后是通过`Symbol.species`属性实现这一行为的
+
+该属性用于定义返回函数的静态访问器属性，每当要在实例的方法中创建类的实例时必须使用这个构造函数。
+
+**以下这些内建类型均已定义Symbol.species属性：**
+
+* Array
+* ArrayBuffer
+* Map
+* Promise
+* RegExp
+* Set
+* Typed arrays
+
+列表中的每个类型都有一个默认的Symbol.species属性，该属性的返回值为this，这也意味着该属性总会返回构造函数。
+
+```js
+class MyClass {
+  static get [Symbol.species]() {
+    return this;
+  }
+  constructor(value) {
+    return value = value;
+  }
+  clone() {
+    return new this.constructor[Symbol.species](this.value);
+  }
+}
+```
+
+该例中`Symbol.species`被用来给MyClass赋值静态访问器属性，这里只有getter而没有setter方法，因为在这里不可以改变类的种类。
+调用`this.constructor[Symbol.species]`会返回MyClass，clone方法通过这个定义可以返回新的实例，从而允许派生类覆盖这个值
+
+### 在类的构造函数中使用new.target
+
+来类的构造函数中也可以通过new.target来确定类是如何被调用的
+
+```js
+class Rectangle {
+  constructor(length, width) {
+    console.log(new.target === Rectangle);
+    this.length = length;
+    this.width = width;
+  }
+}
+// new.target的值是Rectangle
+var obj = new Rectangle(3, 4); // true
+```
+
+上例当调用`new Rectangle(3,4)`时等价于Rectangle的new.target。类构造函数必须通过new关键字调用，所以总是在类的构造函数中定义new.target属性，但是其值有时不同，我们来看另一个例子
+
+```js
+class Rectangle {
+  constructor(length, width) {
+    console.log(new.target === Rectangle);
+    this.length = length;
+    this.width = width;
+  }
+}
+class Square extends Rectangle {
+  constructor(length) {
+    super(length, length);
+  }
+}
+// new.target的值是Square
+var obj = new Square(3); // false
+```
+
+这里的super调用了Rectangle的构造函数，所以当调用发生时new.target等于Square。每个构造函数可以根据自身被调用的方式改变自己的行为，我们再来看个例子：
+
+```js
+// 抽象基类
+class Shape {
+  constructor() {
+    if (new.target === Shape) {
+      throw new Error('这个类不能直接被实例化');
+    }
+  }
+}
+class Rectangle extends Shape {
+  constructor(length, width) {
+    super();
+    this.length = length;
+    this.width = width;
+  }
+}
+var x = new Shape(); // 报错
+var y = new Rectangle(3, 4);
+console.log(y instanceof Shape); // true
+```
+
+每当new.target是Shape的构造函数时总会报错，但仍可用Shape作为基类派生其他类。
+super()调用实行了Shape的构造函数，new.target与Rectangle等价，所以构造函数继续执行不会报错。
+
+注：类必须通过new关键字才能调用，所以在类的构造函数中，new.target属性永远不会是undefined
+
+## 总结
+
+1. ES6的类语法作为ES5传统继承模型的语法糖出现，但又降低了其风险
+2. 通过类在原型上定义非静态方法与原型继承协同工作，而静态方法最终放在构造函数上
+3. 类里的静态方法都是不可枚举的，从而可以更好地匹配内建对象的行为
+4. 类构造函数必须通过new关键字调用，以确保不会意外地将类作为函数去调用
+5. 基于类的继承可以通过函数调用确定最终要继承哪一个类，也可通过mixin对象和其他不同组合模式来创建新类
+6. 类构造函数中，可通过new.target随着类被调用的多种方式而做出不同的对应
+
+---
+
+以上… 终于耐着性子读完，写完了~~ 总之，对于自己来说还算挺有收获。
+坚持学习，慢慢成长，欢迎关注，谢谢你的阅读。
