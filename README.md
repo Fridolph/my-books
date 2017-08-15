@@ -29,7 +29,25 @@ ps 标题只是大气和激励自己…  学海无涯，看官一笑
 
 <img alt="现代前端技术解析" src="https://img1.doubanio.com/lpic/s29428008.jpg" />
 
-这是一本以现代前端技术思想与理论为主要内容的书。前端技术发展迅速，涉及的技术点很多，我们往往需要阅读很多书籍才能理解前端技术的知识体系。
+---
+
+### 《Web API的设计与开发》 水野贵明 / 2017-5
+
+<img alt="WebAPI的设计与开发" src="http://file.ituring.com.cn/SmallCover/1705413f5c52cffff0ce" />
+
+---
+
+### 《Web安全开发指南》 John Paul Mueller / 2017-7
+
+<img alt="Web安全开发指南" src="http://file.ituring.com.cn/SmallCover/1705ed516d8cc2bafd33" />
+
+---
+
+### 《现代前端技术解析》 张成文 / 2017-4
+
+<img alt="现代前端技术解析" src="https://img1.doubanio.com/lpic/s29428008.jpg" />
+
+---
 
 ## JavaScript系列
 
