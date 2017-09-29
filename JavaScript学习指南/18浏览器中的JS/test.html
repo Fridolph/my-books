@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ajax Testing</title>
+</head>
+<body>
+  <div class="server-info">
+    server is running on 
+    <span data-replace="platform">???</span><br>
+    width Node <span data-replace="version">???</span>.<br>
+    It has been up for <span data-replace="uptime">???</span> seconds.
+  </div>
+
+  <!-- <script>
+    function refreshServerInfo() {
+      const req = new XMLHttpRequest();
+      req.addEventListener('load', function() {
+        console.log(this.responseText)
+      })
+      req.open('GET', 'http://localhost:7070', true)
+      req.send()
+    }
+    refreshServerInfo()
+  </script> -->
+
+  <!-- <script>
+    function refreshServerInfo() {
+      const req = new XMLHttpRequest();
+      req.open('GET', 'http://localhost:7070', true)
+      req.addEventListener('load', function() {
+        // console.log(this.responseText);
+        let data = JSON.parse(this.responseText)
+        let info = document.querySelector('.serverInfo')
+        var keys = Object.keys(data)
+        // console.log(keys)
+        keys.forEach(k => {
+          let elem = document.querySelector(`[data-replace=${k}]`)
+          elem.textContent = data[k]
+        })
+      })
+      req.send()
+    }
+    setInterval(refreshServerInfo, 1000)
+  </script> -->
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/core.js"></script>
+  <script>
+    function refreshServerInfo() {
+      const $serverInfo = $('.server-info')
+      $.get('http://localhost:7070').then(function(data) {
+        Object.keys(data).forEach(p => {
+          $(`[data-replace="${p}"]`).text(data[p])
+        })
+      }, function(jqXHR, textStatus, err) {
+        console.error(err);
+        $serverInfo.addClass('error')
+          .html('Error connecting to server.')
+      })        
+    }
+  </script>
+</body>
+</html>
