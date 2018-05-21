@@ -5,35 +5,34 @@ var md = `
 `;
 
 function PriorityQueue() {
-  let items = [];
-
+  let items = []
   function QueueElement(element, priority) {
-    this.element = element;
-    this.priority = priority;
+    this.element = element
+    this.priority = priority
   }
 
   this.enqueue = function(element, priority) {
-    let queueElement = new QueueElement(element, priority);
-    let added = false;
+    let queueElement = new QueueElement(element, priority)
+    let added = false
 
     for (let i = 0; i < items.length; i++) {
       if (queueElement.priority < items[i].priority) {
-        items.splice(i, 0, queueElement);
-        added = true;
-        break;
+        items.splice(i, 0, queueElement)
+        added = true
+        break
       }
     }
-
     if (!added) {
-      items.push(queueElement);
+      items.push(queueElement)
     }
   }
 
   this.print = function() {
     for (let i = 0; i < items.length; i++) {
-      console.log(`${items[i].element} - ${items[i].priority}`);
+      console.log(`${items[i].priority} - ${items[i].element}`)
     }
   }
+  // 其他方法和默认Queue实现相同
 }
 
 var md2 = `
@@ -51,3 +50,10 @@ priorityQueue.enqueue('Jack', 2);
 priorityQueue.enqueue('Camila', 1);
 priorityQueue.print();
 
+var md3 = `
+  第一个被添加的元素是优先级为2的John，因此此队列为空，所以它是队列中唯一元素。接下来，添加了优先级为1的Jack。
+  由于Jack优先级高于John，它就成了队列中的第一个元素。然后添加了优先级也为1的Camila. Camila的优先级和Jack相同，
+  所以它会被插入到Jack之后（因为Jack先被插入队列）Camila优先级高于John，所以它会被插入到John之前。
+  我们在这里实现的优先队列称为最小优先队列，因为优先级的值较小的元素被放置在队列最前面（1代表更高的优先级）。
+  最大优先队列与之相反，把优先级较大的元素放置在队列最前面
+`
