@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SW 基础示例</title>
+</head>
+<body>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log(`serviceWorker registration successful with scople: ${registration.scope}`)
+      }).catch(err => {
+        console.error(`serviceWorker registration failed: ${err}`)
+      })
+    }
+  </script>
+</body>
+</html>
