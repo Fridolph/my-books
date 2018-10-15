@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <img src="/images/hello.png" alt="">
+  </div>
+  <script src="/test.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').then(registration => {
+        console.log('sw注册成功', decodeURIComponent(registration.scope))
+      }).catch(err => {
+        console.error('sw注册失败', err)
+      })
+    }
+  </script>
+</body>
+</html>
