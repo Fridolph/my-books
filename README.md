@@ -6,7 +6,7 @@
 
 羡慕大牛高超的记忆力与理解力，本着勤能补拙的认知，不知不觉养成了敲书的“坏习惯”。这个仓库主要用来列出我读过的书，记录书中经典的代码片段和自己的demo示例，还有就是读书笔记了。
 
-更多也是为了整理博客 [fridolph.github.io](fridolph.github.io)
+更多也是为了整理博客 <a href="https://fridolph.github.io" target="_blank">fridolph.github.io</a>
 
 ps 标题只是大气和激励自己…  学海无涯，看官一笑
 
